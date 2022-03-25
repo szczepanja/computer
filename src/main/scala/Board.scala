@@ -1,18 +1,24 @@
 import scala.collection.mutable.ArrayBuffer
 import scala.io.Source
 
+case class Create(symbol: Char, x: Int, y: Int)
+
+case class Move(x: Int)
+
+case class Rotate(x: Int)
+
 case class Board(m: Int, n: Int) {
   val filename = "C:\\Users\\a.szczepanik\\Projekty\\Computer\\Instructions.txt"
-  val fileContent = Source.fromFile(filename).getLines.flatMap(_.split("\\W+")).toSeq
+  val fileContent = Source.fromFile(filename).getLines
 
   def renderBoard(): Unit = {
     board foreach { row => row foreach print; println }
   }
 
-  val lista = ArrayBuffer[Char]()
+  val list = ArrayBuffer[Char]()
 
-  def create(symbol: Char, x: Int, y: Int) = {
-    lista.addOne(symbol)
+  def create(symbol: Char, x: Int, y: Int): Board = {
+    list.addOne(symbol)
     this
   }
 
@@ -20,40 +26,27 @@ case class Board(m: Int, n: Int) {
 }
 
 object Game extends App {
-  val table = new Board(4, 5)
+  val table = Board(4, 5)
 
   def getWord(line: String) = {
-    val words = line.split("\\W+").toList
-
-    //stworzyć dla każdej instrukcji klasę
-
-    val instructions = Seq("CR", "MO", "REA", "DO")
-
-    words.foldLeft(table.board) { (board, cmd) =>
-      cmd match {
-        case "CR" => board.create(cmd(0), cmd(1), cmd(2))
+    val words = line.split("\\W+").map { w => w match {
+        case w if w.startsWith("CREATE") => println("Coś")
       }
     }
 
-    words.head match {
-      case "CREATE" =>
-        table.board(0)(0) = " > "
-        table.renderBoard()
-      //            case "ROTATE" => println("")
-      //      case "MOVE" => println("")
-      case _ => true
+    words.foldLeft(table) { (board, cmd) =>
+      cmd match {
+        case _ => Board(1, 2)
+//        case Create(symbol, x, y) => board.create('>', 0, 0)
+      }
     }
-    println(words.zipWithIndex)
+  }
+
+  def readContent() = {
+    table.fileContent.foldLeft(()) { (m, n) =>
+      getWord(table.fileContent.toString())
+    }
   }
 
   readContent()
-
-
-  def readContent() = {
-    table.fileContent.indices.foldLeft(()) { (m, n) =>
-      getWord(table.fileContent(n))
-    }
-  }
-
-  //  readContent()
 }
