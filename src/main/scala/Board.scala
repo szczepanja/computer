@@ -32,7 +32,7 @@ case class Board(m: Int, n: Int) {
 object Game extends App {
   val table = Board(4, 5)
 
-  def getWord(): Board = {
+  def getWord: Board = {
     val words = table.fileContent.flatMap(c => c.split("\\W+"))
 
     words.map { w => w match {
@@ -53,7 +53,7 @@ object Game extends App {
 
   def play(): Unit = {
     table.fileContent.foldLeft(()) { (m, n) =>
-      getWord(table.fileContent.toString())
+      getWord
     }
   }
 
