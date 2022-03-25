@@ -22,31 +22,39 @@ case class Board(m: Int, n: Int) {
     this
   }
 
+  def move(step: Int) = ???
+
+  def rotate(angle: Int) = ???
+
   val board: Array[Array[String]] = Array.fill(m, n)(" . ")
 }
 
 object Game extends App {
   val table = Board(4, 5)
 
-  def getWord(line: String) = {
-    val words = line.split("\\W+").map { w => w match {
-        case w if w.startsWith("CREATE") => println("Coś")
+  def getWord(line: String): Board = {
+    val words = line.split("\\W+").map { w =>
+      w match {
+        case w if w.startsWith("CREATE") => Create(w(1), w(2), w(3))
+        case w if w.startsWith("ROTATE") => Rotate(w(1))
+        case w if w.startsWith("MOVE") => Move(w(1))
       }
     }
 
     words.foldLeft(table) { (board, cmd) =>
       cmd match {
-        case _ => Board(1, 2)
-//        case Create(symbol, x, y) => board.create('>', 0, 0)
+        case Create('>', 0, 0) => board.create('>', 0, 0)
+        case Move(0) => board.move(0)
+        case Rotate(0) => board.rotate(0)
       }
     }
   }
 
-  def readContent() = {
+  def play(): Unit = {
     table.fileContent.foldLeft(()) { (m, n) =>
       getWord(table.fileContent.toString())
     }
   }
 
-  readContent()
+  play()
 }
