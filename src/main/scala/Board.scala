@@ -32,12 +32,13 @@ case class Board(m: Int, n: Int) {
 object Game extends App {
   val table = Board(4, 5)
 
-  def getWord(line: String): Board = {
-    val words = line.split("\\W+").map { w =>
-      w match {
-        case w if w.startsWith("CREATE") => Create(w(1), w(2), w(3))
-        case w if w.startsWith("ROTATE") => Rotate(w(1))
-        case w if w.startsWith("MOVE") => Move(w(1))
+  def getWord(): Board = {
+    val words = table.fileContent.flatMap(c => c.split("\\W+"))
+
+    words.map { w => w match {
+        case w.contains("CREATE") => Create(w(1), w(2), w(3))
+        case w.contains("ROTATE") => Rotate(w(1))
+        case w.contains("MOVE") => Move(w(1))
       }
     }
 
