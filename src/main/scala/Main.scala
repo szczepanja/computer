@@ -8,5 +8,5 @@ object Main extends App {
   val fileName = "instructions.txt"
   val lines = Source.fromFile(fileName).getLines
 
-  board.renderBoard()
+  board.render()
 }
