@@ -1,4 +1,3 @@
-case class Create(symbol: Char, x: Int, y: Int, id: String)
 case class Move(n: Int)
 case class Rotate(r: Int)
 
