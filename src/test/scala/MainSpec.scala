@@ -8,4 +8,8 @@ class MainSpec extends AnyFlatSpec with should.Matchers {
 
     board.render()
   }
+
+  "A Create" should "create class with symbol, x and y positiond, and id" in {
+    val create = Create('>', 0, 0, "ID1")
+  }
 }

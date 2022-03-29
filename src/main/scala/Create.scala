@@ -1,1 +1,1 @@
-case class Create(symbol: Char, x: Int, y: Int, id: String)
+case class Create(symbol: Char, x: Int, y: Int, id: String) extends Command
